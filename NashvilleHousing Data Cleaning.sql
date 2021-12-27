@@ -1,5 +1,5 @@
 /*
-Cleaning Data in SQL
+Nashville Housing Data Cleaning in SQL
 ---------------------------------------------------------------------------------------
 */
 
@@ -23,7 +23,6 @@ Add SaleDateConverted Date;
 Update NashvilleHousing
 SET SaleDateConverted = CONVERT(Date,SaleDate)
 
-
 /*
  ---------------------------------------------------------------------------------------
  Populate Property Address Data
@@ -42,7 +41,6 @@ Select *
 	AND a.[UniqueID ] <> b.[UniqueID ]
 Where a.PropertyAddress is null
 
-
 Update a
 SET PropertyAddress = ISNULL(a.PropertyAddress, b.PropertyAddress)
 From PortfolioProject.dbo.NashvilleHousing a
@@ -50,7 +48,6 @@ From PortfolioProject.dbo.NashvilleHousing a
 	on a.ParcelID = b.ParcelID
 	AND a.[UniqueID ] <> b.[UniqueID ]
 Where a.PropertyAddress is null
-
 
 /*
  ---------------------------------------------------------------------------------------
@@ -68,7 +65,6 @@ SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress)-1) as Address
 , SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress)+1, LEN(PropertyAddress)) as Address
 
 From PortfolioProject.dbo.NashvilleHousing
-
 
 ALTER TABLE NashvilleHousing
 Add PropertySplitAddress Nvarchar(255);
@@ -119,7 +115,6 @@ SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',', '.'), 1)
 Select *
 From PortfolioProject.dbo.NashvilleHousing
 
-
 /*
  ---------------------------------------------------------------------------------------
  CHANGING Y AND N TO YES AND NO IN "SOLD AS VACANT"
@@ -143,7 +138,6 @@ SET SoldAsVacant = CASE When SoldAsVacant = 'Y' THEN 'Yes'
 	   When SoldAsVacant = 'N' THEN 'No'
 	   ELSE SoldAsVacant
 	   END
-
 
 /*
  ---------------------------------------------------------------------------------------
